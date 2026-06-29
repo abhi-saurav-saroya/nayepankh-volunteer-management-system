@@ -1,4 +1,5 @@
 import sqlite3
+from models.volunteers import Volunteer
 
 DATABASE_NAME = "database/volunteers.db"
 
@@ -25,6 +26,39 @@ def create_table():
             join_date TEXT NOT NULL
         )
     """)
+
+    connection.commit()
+    connection.close()
+
+
+def insert_volunteer(volunteer: Volunteer):
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    cursor.execute("""
+        INSERT INTO volunteers (
+            name,
+            age,
+            gender,
+            phone,
+            email,
+            city,
+            skill,
+            availability,
+            join_date
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    """, (
+        volunteer.name,
+        volunteer.age,
+        volunteer.gender,
+        volunteer.phone,
+        volunteer.email,
+        volunteer.city,
+        volunteer.skill,
+        volunteer.availability,
+        volunteer.join_date
+    ))
 
     connection.commit()
     connection.close()

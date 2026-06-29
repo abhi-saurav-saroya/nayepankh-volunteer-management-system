@@ -1,9 +1,11 @@
 from database.database import create_table
 from utils.menu import display_menu, get_choice
+from services.volunteer_services import VolunteerService
 
 
 def main():
     create_table()
+    service = VolunteerService()
 
     while True:
         display_menu()
@@ -11,7 +13,7 @@ def main():
 
         match choice:
             case 1:
-                print("\n[Add Volunteer - Coming Soon]")
+                service.add_volunteer()
             case 2:
                 print("\n[View Volunteers - Coming Soon]")
             case 3:
