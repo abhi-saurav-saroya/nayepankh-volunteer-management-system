@@ -1,6 +1,6 @@
 from datetime import date
 
-from database.database import insert_volunteer
+from database.database import insert_volunteer, get_all_volunteers
 from models.volunteers import Volunteer
 
 from utils.validators import (
@@ -43,3 +43,41 @@ class VolunteerService:
         insert_volunteer(volunteer)
 
         print("\nVolunteer added successfully!")
+
+    def view_all_volunteers(self):
+        volunteers = get_all_volunteers()
+    
+        if not volunteers:
+            print("\nNo volunteers found.")
+            return
+    
+        print("\n" + "=" * 130)
+    
+        print(
+            f"{'ID':<5}"
+            f"{'Name':<20}"
+            f"{'Age':<6}"
+            f"{'Gender':<10}"
+            f"{'Phone':<15}"
+            f"{'City':<15}"
+            f"{'Skill':<18}"
+            f"{'Available':<12}"
+            f"{'Join Date':<15}"
+        )
+    
+        print("-" * 130)
+    
+        for volunteer in volunteers:
+            print(
+                f"{volunteer.id:<5}"
+                f"{volunteer.name:<20}"
+                f"{volunteer.age:<6}"
+                f"{volunteer.gender:<10}"
+                f"{volunteer.phone:<15}"
+                f"{volunteer.city:<15}"
+                f"{volunteer.skill:<18}"
+                f"{volunteer.availability:<12}"
+                f"{volunteer.join_date:<15}"
+            )
+    
+        print("=" * 130)

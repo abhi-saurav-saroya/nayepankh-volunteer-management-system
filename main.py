@@ -15,7 +15,7 @@ def main():
             case 1:
                 service.add_volunteer()
             case 2:
-                print("\n[View Volunteers - Coming Soon]")
+                service.view_all_volunteers()
             case 3:
                 print("\n[Search Volunteer - Coming Soon]")
             case 4:
