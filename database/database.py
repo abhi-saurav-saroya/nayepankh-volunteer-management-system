@@ -1,6 +1,8 @@
 import sqlite3
 from models.volunteers import Volunteer
 
+from utils.mapper import rows_to_volunteers
+
 DATABASE_NAME = "database/volunteers.db"
 
 
@@ -87,25 +89,7 @@ def get_all_volunteers():
     rows = cursor.fetchall()
     connection.close()
 
-    volunteers = []
-
-    for row in rows:
-        volunteers.append(
-            Volunteer(
-                id=row[0],
-                name=row[1],
-                age=row[2],
-                gender=row[3],
-                phone=row[4],
-                email=row[5],
-                city=row[6],
-                skill=row[7],
-                availability=row[8],
-                join_date=row[9]
-            )
-        )
-
-    return volunteers
+    return rows_to_volunteers(rows)
 
 
 def search_volunteers(keyword: str):
@@ -139,22 +123,4 @@ def search_volunteers(keyword: str):
     rows = cursor.fetchall()
     connection.close()
 
-    volunteers = []
-
-    for row in rows:
-        volunteers.append(
-            Volunteer(
-                id=row[0],
-                name=row[1],
-                age=row[2],
-                gender=row[3],
-                phone=row[4],
-                email=row[5],
-                city=row[6],
-                skill=row[7],
-                availability=row[8],
-                join_date=row[9]
-            )
-        )
-
-    return volunteers
+    return rows_to_volunteers(rows)
