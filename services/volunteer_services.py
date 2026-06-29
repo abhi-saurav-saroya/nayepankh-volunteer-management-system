@@ -1,6 +1,5 @@
 from datetime import date
 
-from database.database import insert_volunteer, get_all_volunteers
 from models.volunteers import Volunteer
 from utils.table_formatter import print_volunteers
 
@@ -11,6 +10,12 @@ from utils.validators import (
     get_phone,
     get_email,
     get_availability
+)
+
+from database.database import (
+    insert_volunteer,
+    get_all_volunteers,
+    search_volunteers
 )
 
 class VolunteerService:
@@ -46,4 +51,11 @@ class VolunteerService:
 
     def view_all_volunteers(self):
         volunteers = get_all_volunteers()
+        print_volunteers(volunteers)
+
+    def search_volunteer(self):
+        print("\n=== Search Volunteer ===")
+        keyword = get_text("Enter name, city or skill: ")
+
+        volunteers = search_volunteers(keyword)
         print_volunteers(volunteers)

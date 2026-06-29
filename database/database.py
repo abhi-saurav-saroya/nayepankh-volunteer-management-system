@@ -106,3 +106,55 @@ def get_all_volunteers():
         )
 
     return volunteers
+
+
+def search_volunteers(keyword: str):
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    cursor.execute("""
+        SELECT
+            id,
+            name,
+            age,
+            gender,
+            phone,
+            email,
+            city,
+            skill,
+            availability,
+            join_date
+        FROM volunteers
+        WHERE
+            name LIKE ?
+            OR city LIKE ?
+            OR skill LIKE ?
+        ORDER BY id
+    """, (
+        f"%{keyword}%",
+        f"%{keyword}%",
+        f"%{keyword}%"
+    ))
+
+    rows = cursor.fetchall()
+    connection.close()
+
+    volunteers = []
+
+    for row in rows:
+        volunteers.append(
+            Volunteer(
+                id=row[0],
+                name=row[1],
+                age=row[2],
+                gender=row[3],
+                phone=row[4],
+                email=row[5],
+                city=row[6],
+                skill=row[7],
+                availability=row[8],
+                join_date=row[9]
+            )
+        )
+
+    return volunteers
