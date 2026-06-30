@@ -17,7 +17,8 @@ from database.database import (
     get_all_volunteers,
     search_volunteers,
     get_volunteer_by_id,
-    update_volunteer
+    update_volunteer,
+    delete_volunteer
 )
 
 class VolunteerService:
@@ -134,3 +135,34 @@ class VolunteerService:
         update_volunteer(volunteer)
 
         print("\nVolunteer updated successfully!")
+
+    def delete_volunteer(self):
+        print("\n=== Delete Volunteer ===")
+    
+        volunteer_id = get_positive_integer("Enter Volunteer ID: ")
+    
+        volunteer = get_volunteer_by_id(volunteer_id)
+    
+        if volunteer is None:
+            print("\nVolunteer not found.")
+            return
+    
+        print("\nVolunteer Details")
+        print("-" * 25)
+        print(f"Name : {volunteer.name}")
+        print(f"City : {volunteer.city}")
+        print(f"Skill: {volunteer.skill}")
+    
+        while True:
+            confirmation = input("\nAre you sure you want to delete this volunteer? (Y/N): ").strip().upper()
+    
+            if confirmation == "Y":
+                delete_volunteer(volunteer.id)
+                print("\nVolunteer deleted successfully!")
+                return
+    
+            if confirmation == "N":
+                print("\nDeletion cancelled.")
+                return
+    
+            print("Please enter Y or N.")

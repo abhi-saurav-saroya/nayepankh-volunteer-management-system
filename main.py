@@ -23,7 +23,7 @@ def main():
             case 5:
                 service.update_volunteer()
             case 6:
-                print("\n[Delete Volunteer - Coming Soon]")
+                service.delete_volunteer()
             case 7:
                 print("\n[Generate Report - Coming Soon]")
             case 8:

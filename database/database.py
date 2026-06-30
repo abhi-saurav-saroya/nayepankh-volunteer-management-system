@@ -188,3 +188,16 @@ def update_volunteer(volunteer: Volunteer):
 
     connection.commit()
     connection.close()
+
+
+def delete_volunteer(volunteer_id: int):
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    cursor.execute("""
+        DELETE FROM volunteers
+        WHERE id = ?
+    """, (volunteer_id,))
+
+    connection.commit()
+    connection.close()
