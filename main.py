@@ -21,7 +21,7 @@ def main():
             case 4:
                 print("\n[Filter Volunteers - Coming Soon]")
             case 5:
-                print("\n[Update Volunteer - Coming Soon]")
+                service.update_volunteer()
             case 6:
                 print("\n[Delete Volunteer - Coming Soon]")
             case 7:

@@ -15,7 +15,9 @@ from utils.validators import (
 from database.database import (
     insert_volunteer,
     get_all_volunteers,
-    search_volunteers
+    search_volunteers,
+    get_volunteer_by_id,
+    update_volunteer
 )
 
 class VolunteerService:
@@ -59,3 +61,50 @@ class VolunteerService:
 
         volunteers = search_volunteers(keyword)
         print_volunteers(volunteers)
+
+    def update_volunteer(self):
+        print("\n=== Update Volunteer ===")
+
+        volunteer_id = get_positive_integer("Enter Volunteer ID: ")
+
+        volunteer = get_volunteer_by_id(volunteer_id)
+
+        if volunteer is None:
+            print("\nVolunteer not found.")
+            return
+
+        print("\nPress Enter to keep the current value.\n")
+    
+        volunteer.name = self._update_field("Name", volunteer.name)
+    
+        age = input(f"Age [{volunteer.age}]: ").strip()
+        if age:
+            volunteer.age = int(age)
+    
+        volunteer.gender = self._update_field("Gender", volunteer.gender)
+    
+        volunteer.phone = self._update_field("Phone", volunteer.phone)
+    
+        volunteer.email = self._update_field("Email", volunteer.email)
+    
+        volunteer.city = self._update_field("City", volunteer.city)
+    
+        volunteer.skill = self._update_field("Skill", volunteer.skill)
+    
+        volunteer.availability = self._update_field(
+            "Availability",
+            volunteer.availability
+        )
+    
+        update_volunteer(volunteer)
+    
+        print("\nVolunteer updated successfully.")
+
+    @staticmethod
+    def _update_field(prompt, current_value):
+        value = input(f"{prompt} [{current_value}]: ").strip()
+
+        if value == "":
+            return current_value
+
+        return value

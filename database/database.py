@@ -124,3 +124,67 @@ def search_volunteers(keyword: str):
     connection.close()
 
     return rows_to_volunteers(rows)
+
+
+def get_volunteer_by_id(volunteer_id: int):
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    cursor.execute("""
+        SELECT
+            id,
+            name,
+            age,
+            gender,
+            phone,
+            email,
+            city,
+            skill,
+            availability,
+            join_date
+        FROM volunteers
+        WHERE id = ?
+    """, (volunteer_id,))
+
+    row = cursor.fetchone()
+
+    connection.close()
+
+    if row:
+        return Volunteer(*row)
+
+    return None
+
+
+def update_volunteer(volunteer: Volunteer):
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    cursor.execute("""
+        UPDATE volunteers
+        SET
+            name = ?,
+            age = ?,
+            gender = ?,
+            phone = ?,
+            email = ?,
+            city = ?,
+            skill = ?,
+            availability = ?,
+            join_date = ?
+        WHERE id = ?
+    """, (
+        volunteer.name,
+        volunteer.age,
+        volunteer.gender,
+        volunteer.phone,
+        volunteer.email,
+        volunteer.city,
+        volunteer.skill,
+        volunteer.availability,
+        volunteer.join_date,
+        volunteer.id
+    ))
+
+    connection.commit()
+    connection.close()
