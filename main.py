@@ -2,12 +2,14 @@ from database.database import create_table
 from utils.menu import display_menu, get_choice
 from services.volunteer_services import VolunteerService
 from services.report_service import ReportService
+from services.export_service import ExportService
 
 
 def main():
     create_table()
     service = VolunteerService()
     report_service = ReportService()
+    export_service = ExportService()
 
     while True:
         display_menu()
@@ -29,7 +31,7 @@ def main():
             case 7:
                 report_service.generate_report()
             case 8:
-                print("\n[Export to CSV - Coming Soon]")
+                export_service.export_to_csv()
             case 9:
                 print("\nThank you for using NayePankh Volunteer Management System!")
                 break
