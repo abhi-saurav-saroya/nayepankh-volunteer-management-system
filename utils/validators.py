@@ -1,9 +1,21 @@
 import re
 
 
-def get_text(prompt):
+def _handle_empty_input(value, allow_empty):
+    if allow_empty and value == "":
+        return None
+
+    return value
+
+
+def get_text(prompt, allow_empty=False):
     while True:
         value = input(prompt).strip()
+
+        value = _handle_empty_input(value, allow_empty)
+
+        if value is None:
+            return None
 
         if value:
             return value
@@ -11,9 +23,14 @@ def get_text(prompt):
         print("Input cannot be empty.")
 
 
-def get_positive_integer(prompt):
+def get_positive_integer(prompt, allow_empty=False):
     while True:
         value = input(prompt).strip()
+
+        value = _handle_empty_input(value, allow_empty)
+
+        if value is None:
+            return None
 
         try:
             number = int(value)
@@ -27,11 +44,16 @@ def get_positive_integer(prompt):
             print("Please enter a valid integer.")
 
 
-def get_gender(prompt):
+def get_gender(prompt, allow_empty=False):
     valid_genders = ["Male", "Female", "Other"]
 
     while True:
         gender = input(prompt).strip().title()
+
+        gender = _handle_empty_input(gender, allow_empty)
+
+        if gender is None:
+            return None
 
         if gender in valid_genders:
             return gender
@@ -39,9 +61,14 @@ def get_gender(prompt):
         print("Invalid gender. Choose Male, Female or Other.")
 
 
-def get_phone(prompt):
+def get_phone(prompt, allow_empty=False):
     while True:
         phone = input(prompt).strip()
+
+        phone = _handle_empty_input(phone, allow_empty)
+
+        if phone is None:
+            return None
 
         if phone.isdigit() and len(phone) == 10:
             return phone
@@ -49,11 +76,16 @@ def get_phone(prompt):
         print("Phone number must contain exactly 10 digits.")
 
 
-def get_email(prompt):
+def get_email(prompt, allow_empty=False):
     pattern = r'^[\w\.-]+@[\w\.-]+\.\w+$'
 
     while True:
         email = input(prompt).strip()
+
+        email = _handle_empty_input(email, allow_empty)
+
+        if email is None:
+            return None
 
         if re.fullmatch(pattern, email):
             return email
@@ -61,11 +93,16 @@ def get_email(prompt):
         print("Invalid email address.")
 
 
-def get_availability(prompt):
+def get_availability(prompt, allow_empty=False):
     valid_options = ["Yes", "No"]
 
     while True:
         availability = input(prompt).strip().title()
+
+        availability = _handle_empty_input(availability, allow_empty)
+
+        if availability is None:
+            return None
 
         if availability in valid_options:
             return availability

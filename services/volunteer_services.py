@@ -74,37 +74,63 @@ class VolunteerService:
             return
 
         print("\nPress Enter to keep the current value.\n")
-    
-        volunteer.name = self._update_field("Name", volunteer.name)
-    
-        age = input(f"Age [{volunteer.age}]: ").strip()
-        if age:
-            volunteer.age = int(age)
-    
-        volunteer.gender = self._update_field("Gender", volunteer.gender)
-    
-        volunteer.phone = self._update_field("Phone", volunteer.phone)
-    
-        volunteer.email = self._update_field("Email", volunteer.email)
-    
-        volunteer.city = self._update_field("City", volunteer.city)
-    
-        volunteer.skill = self._update_field("Skill", volunteer.skill)
-    
-        volunteer.availability = self._update_field(
-            "Availability",
-            volunteer.availability
+
+        name = get_text(
+            f"Name [{volunteer.name}]: ",
+            allow_empty=True
         )
-    
+        if name is not None:
+            volunteer.name = name
+
+        age = get_positive_integer(
+            f"Age [{volunteer.age}]: ",
+            allow_empty=True
+        )
+        if age is not None:
+            volunteer.age = age
+
+        gender = get_gender(
+            f"Gender [{volunteer.gender}]: ",
+            allow_empty=True
+        )
+        if gender is not None:
+            volunteer.gender = gender
+
+        phone = get_phone(
+            f"Phone [{volunteer.phone}]: ",
+            allow_empty=True
+        )
+        if phone is not None:
+            volunteer.phone = phone
+
+        email = get_email(
+            f"Email [{volunteer.email}]: ",
+            allow_empty=True
+        )
+        if email is not None:
+            volunteer.email = email
+
+        city = get_text(
+            f"City [{volunteer.city}]: ",
+            allow_empty=True
+        )
+        if city is not None:
+            volunteer.city = city
+
+        skill = get_text(
+            f"Skill [{volunteer.skill}]: ",
+            allow_empty=True
+        )
+        if skill is not None:
+            volunteer.skill = skill
+
+        availability = get_availability(
+            f"Availability [{volunteer.availability}]: ",
+            allow_empty=True
+        )
+        if availability is not None:
+            volunteer.availability = availability
+
         update_volunteer(volunteer)
-    
-        print("\nVolunteer updated successfully.")
 
-    @staticmethod
-    def _update_field(prompt, current_value):
-        value = input(f"{prompt} [{current_value}]: ").strip()
-
-        if value == "":
-            return current_value
-
-        return value
+        print("\nVolunteer updated successfully!")
