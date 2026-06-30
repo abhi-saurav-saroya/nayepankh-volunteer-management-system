@@ -1,11 +1,13 @@
 from database.database import create_table
 from utils.menu import display_menu, get_choice
 from services.volunteer_services import VolunteerService
+from services.report_service import ReportService
 
 
 def main():
     create_table()
     service = VolunteerService()
+    report_service = ReportService()
 
     while True:
         display_menu()
@@ -25,7 +27,7 @@ def main():
             case 6:
                 service.delete_volunteer()
             case 7:
-                print("\n[Generate Report - Coming Soon]")
+                report_service.generate_report()
             case 8:
                 print("\n[Export to CSV - Coming Soon]")
             case 9:

@@ -242,3 +242,84 @@ def filter_volunteers(column: str, value: str):
     connection.close()
 
     return rows_to_volunteers(rows)
+
+
+def get_total_volunteers():
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    cursor.execute("""
+        SELECT COUNT(*)
+        FROM volunteers
+    """)
+
+    total = cursor.fetchone()[0]
+
+    connection.close()
+    return total
+
+
+def get_available_volunteers_count():
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    cursor.execute("""
+        SELECT COUNT(*)
+        FROM volunteers
+        WHERE availability = 'Yes'
+    """)
+
+    total = cursor.fetchone()[0]
+
+    connection.close()
+    return total
+
+
+def get_unavailable_volunteers_count():
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    cursor.execute("""
+        SELECT COUNT(*)
+        FROM volunteers
+        WHERE availability = 'No'
+    """)
+
+    total = cursor.fetchone()[0]
+
+    connection.close()
+    return total
+
+
+def get_volunteers_by_city():
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    cursor.execute("""
+        SELECT city, COUNT(*)
+        FROM volunteers
+        GROUP BY city
+        ORDER BY city
+    """)
+
+    rows = cursor.fetchall()
+
+    connection.close()
+    return rows
+
+
+def get_volunteers_by_skill():
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    cursor.execute("""
+        SELECT skill, COUNT(*)
+        FROM volunteers
+        GROUP BY skill
+        ORDER BY skill
+    """)
+
+    rows = cursor.fetchall()
+
+    connection.close()
+    return rows
