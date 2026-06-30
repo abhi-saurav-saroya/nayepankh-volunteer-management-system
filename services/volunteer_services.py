@@ -18,7 +18,8 @@ from database.database import (
     search_volunteers,
     get_volunteer_by_id,
     update_volunteer,
-    delete_volunteer
+    delete_volunteer,
+    filter_volunteers
 )
 
 class VolunteerService:
@@ -138,31 +139,59 @@ class VolunteerService:
 
     def delete_volunteer(self):
         print("\n=== Delete Volunteer ===")
-    
+
         volunteer_id = get_positive_integer("Enter Volunteer ID: ")
-    
+
         volunteer = get_volunteer_by_id(volunteer_id)
-    
+
         if volunteer is None:
             print("\nVolunteer not found.")
             return
-    
+
         print("\nVolunteer Details")
         print("-" * 25)
         print(f"Name : {volunteer.name}")
         print(f"City : {volunteer.city}")
         print(f"Skill: {volunteer.skill}")
-    
+
         while True:
             confirmation = input("\nAre you sure you want to delete this volunteer? (Y/N): ").strip().upper()
-    
+
             if confirmation == "Y":
                 delete_volunteer(volunteer.id)
                 print("\nVolunteer deleted successfully!")
                 return
-    
+
             if confirmation == "N":
                 print("\nDeletion cancelled.")
                 return
-    
+
             print("Please enter Y or N.")
+
+    def filter_volunteers(self):
+        while True:
+            print("\n========== Filter Volunteers ==========")
+            print("1. Filter by City")
+            print("2. Filter by Skill")
+            print("3. Filter by Availability")
+            print("4. Back")
+
+            choice = get_positive_integer("Enter your choice: ")
+
+            match choice:
+                case 1:
+                    city = get_text("Enter city: ")
+                    volunteers = filter_volunteers("city", city)
+                    print_volunteers(volunteers)
+                case 2:
+                    skill = get_text("Enter skill: ")
+                    volunteers = filter_volunteers("skill", skill)
+                    print_volunteers(volunteers)
+                case 3:
+                    availability = get_availability("Availability (Yes/No): ")
+                    volunteers = filter_volunteers("availability", availability)
+                    print_volunteers(volunteers)
+                case 4:
+                    return
+                case _:
+                    print("Invalid choice.")

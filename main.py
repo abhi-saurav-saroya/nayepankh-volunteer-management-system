@@ -19,7 +19,7 @@ def main():
             case 3:
                 service.search_volunteer()
             case 4:
-                print("\n[Filter Volunteers - Coming Soon]")
+                service.filter_volunteers()
             case 5:
                 service.update_volunteer()
             case 6:

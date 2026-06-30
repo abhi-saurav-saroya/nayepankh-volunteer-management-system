@@ -201,3 +201,44 @@ def delete_volunteer(volunteer_id: int):
 
     connection.commit()
     connection.close()
+
+
+def filter_volunteers(column: str, value: str):
+    """
+    Filter volunteers by a specific column and value.
+    """
+
+    allowed_columns = {
+        "city",
+        "skill",
+        "availability"
+    }
+
+    if column not in allowed_columns:
+        raise ValueError("Invalid filter column.")
+
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    cursor.execute(f"""
+        SELECT
+            id,
+            name,
+            age,
+            gender,
+            phone,
+            email,
+            city,
+            skill,
+            availability,
+            join_date
+        FROM volunteers
+        WHERE {column} = ?
+        ORDER BY id
+    """, (value,))
+
+    rows = cursor.fetchall()
+
+    connection.close()
+
+    return rows_to_volunteers(rows)
